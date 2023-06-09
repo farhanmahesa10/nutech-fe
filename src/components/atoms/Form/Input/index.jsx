@@ -45,7 +45,7 @@ const Input = (props) => {
         <span className="block text-sm font-medium ">{label}</span>
       </label>
       <div
-        className={`border focus-within:border-1 ${
+        className={`bg-white border focus-within:border-1 ${
           !getError() ? "border-neutral-100" : "border-red-500"
         } rounded-[8px] focus-within:border-yellow-500 flex items-center `}
       >

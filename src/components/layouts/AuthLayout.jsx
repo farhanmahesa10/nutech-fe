@@ -4,12 +4,12 @@ const AuthLayouts = (props) => {
   const { children, navBg, title, bg, breadCrumbs, childrenPosition } = props;
   return (
     <main
-      className={`min-h-screen  wrapper bg-[url('./assets/images/bg-login.jpg')] bg-no-repeat ${
+      className={`min-h-screen  wrapper lg:bg-[url('./assets/images/bg-login.jpg')] bg-no-repeat ${
         childrenPosition === "left" && "bg-right"
-      } bg-[size:50%_100%] `}
+      }  lg:bg-[size:100%_100%] `}
     >
       <div className="container  ">
-        <div className="grid-template min-h-screen">
+        <div className="grid-template min-h-screen ">
           <div
             className={`h-full hidden lg:col-span-5 lg:flex items-center  ${
               childrenPosition === "right"
@@ -18,26 +18,15 @@ const AuthLayouts = (props) => {
             }`}
           >
             <div>
-              <div className="mt-[32px]  ">
+              <div className="mt-[32px]  bg-slate-500/80 p-5">
                 <h1 className="font-h1 ">Nutech Test</h1>
                 <h1 className="font-h1 ">By, M. Farhan</h1>
-                <div className="bg-yellow-500 px-2 rounded-[8px]">
+                <div className=" px-2 rounded-[8px]">
                   <p className="mt-[24px] e font-lg font-semibold">
                     To login please use this account
                   </p>
-                  <p>Username : admin001</p>
+                  <p>Username : admin</p>
                   <p>Password : 1234</p>
-                </div>
-              </div>
-              <div className="my-[32px] flex gap-4 items-center">
-                <div>
-                  <img src="/images/bg-login.jpg" alt="atlaz people" />
-                </div>
-                <div className="max-w-[263px]">
-                  <p className="">
-                    Atlaz Book has been used by over 100,000 students in
-                    Indonesia.
-                  </p>
                 </div>
               </div>
             </div>
