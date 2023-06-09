@@ -17,21 +17,18 @@ const useProducts = () => {
     setReqLoading(true);
     try {
       const result = await GET(
-        `/products?_sort=id&_order=desc&_page=${page}&_limit=5&nama_like=${keyword}`
+        `/products?order=desc&page=${page}&limit=5&nama=${keyword}`
       );
 
-      let total_page = Math.ceil(
-        (parseInt(result.headers["x-total-count"]) + 1) / 5
-      );
+      let total_page = Math.ceil(result.data.total / 5);
       let newPagination = {
-        next_page: total_page > page ? true : false,
-        prev_page: page - 1,
-        current_page: page,
+        next_page: total_page > result.data.page ? true : false,
+        prev_page: result.data.page - 1,
+        current_page: result.data.page,
         total_page,
       };
-
       setPagination(newPagination);
-      setProducts(result.data);
+      setProducts(result.data.data);
     } catch (error) {}
     setReqLoading(false);
   }, []);
