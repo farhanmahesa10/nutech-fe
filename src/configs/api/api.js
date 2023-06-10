@@ -45,7 +45,6 @@ API.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-
 API.interceptors.response.use(
   (res) => {
     return res;
@@ -56,7 +55,8 @@ API.interceptors.response.use(
 
     if (err.response) {
       // Access Token was expired
-      if (err.response.status === 401) {
+      if (err.response.status === 401 && !originalConfig._retry) {
+        originalConfig._retry = true;
         try {
           const result = await API.post("/refresh-token", { refreshToken });
           localStorage.setItem("token", result.data.token);
@@ -66,9 +66,10 @@ API.interceptors.response.use(
           };
           return API(originalConfig);
         } catch (_error) {
-          deleteCookie("token");
           window.location.href = "/login";
         }
+      } else {
+        window.location.href = "/login";
       }
     }
     return Promise.reject(err);

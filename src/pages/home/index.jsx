@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { MdOutlineDelete, MdOutlineEdit, MdRemoveRedEye } from "react-icons/md";
+import {
+  MdLogout,
+  MdOutlineDelete,
+  MdOutlineEdit,
+  MdRemoveRedEye,
+} from "react-icons/md";
 import { FormControl, ServerSideLoading } from "../../components/atoms";
 import {
   ModalAddProduct,
@@ -10,6 +15,8 @@ import { IDR } from "../../helpers/globalHelpers";
 import useProducts from "../../services/useProducts";
 import { useFormik } from "formik";
 import toast, { Toaster } from "react-hot-toast";
+import { withAuth } from "../../components/hocs";
+import { useNavigate } from "react-router-dom";
 const Home = () => {
   const {
     reqLoading,
@@ -26,7 +33,7 @@ const Home = () => {
   const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
   const [modalAddProductOpen, setModalAddProductOpen] = useState(false);
   const [lastKeyword, setLastKeyword] = useState("");
-
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: { keyword: "" },
     onSubmit: (values) => {
@@ -129,6 +136,28 @@ const Home = () => {
 
   return (
     <>
+      <div className=" wrapper mt-4 border-b pb-2 border-slate-500">
+        <div className="container">
+          <div className="flex wrapper justify-between">
+            <div>
+              <h4 className="font-h4">FARHAN.</h4>
+            </div>
+            <div>
+              <button
+                className="btn py-2 btn-outline gap-2"
+                type="button"
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  localStorage.removeItem("refreshToken");
+                  navigate("/login");
+                }}
+              >
+                Logout <MdLogout />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       <Toaster />
       <div className="relative">
         {reqLoading && <ServerSideLoading fixCenter />}
@@ -169,7 +198,8 @@ const Home = () => {
         setOpen={setModalDeleteOpen}
       />
       <div className="wrapper">
-        <div className="container my-[80px]">
+        <div className="container my-[40px]">
+          <h5 className="font-h5 my-4">Kelola Data Produk</h5>
           <div className="flex flex-col sm:flex-row gap-4 justify-between">
             <form onSubmit={formik.handleSubmit} className="order-2 sm:order-1">
               <FormControl
@@ -205,4 +235,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default withAuth(Home);

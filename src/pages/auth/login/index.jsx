@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AuthLayout } from "../../../components/layouts";
 import FormControl from "../../../components/atoms/Form/FormControl";
 import { useFormik } from "formik";
@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { POST } from "../../../configs/api/api";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-
+import { withCheckAuth } from "../../../components/hocs";
 const Login = () => {
   const navigate = useNavigate();
   const [reqLoading, setReqLoading] = useState(false);
@@ -36,6 +36,16 @@ const Login = () => {
     }
     setReqLoading(false);
   };
+
+  useEffect(() => {
+    try {
+      let toastMessage = localStorage.getItem("toast");
+      if (toastMessage) {
+        toast.error(JSON.parse(toastMessage).message);
+        localStorage.removeItem("toast");
+      }
+    } catch (error) {}
+  }, []);
 
   return (
     <AuthLayout childrenPosition="right">
@@ -82,4 +92,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default withCheckAuth(Login);
