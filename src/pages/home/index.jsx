@@ -224,14 +224,15 @@ const Home = () => {
                 melakukan refres token
               </li>
               <li>
-                refresh token hanya bisa dilakukan setelah 10 menit login, dan
-                akan diminta login kembali setelah 10 menit. waktu expired di
-                set cepat karna ini hanya untuk test fungsi saja
+                refresh token hanya bisa dilakukan selama login belum 10 menit,
+                dan akan diminta login kembali setelah 10 menit. waktu expired
+                di set cepat karna ini hanya untuk test fungsi saja
               </li>
               <li>Waktu expired token dapat disesuaikan dengan kebutuhan</li>
               <li>
                 Anda tidak dapat mengakses halaman ini jika tidak login /
-                refresh token expired / tidak punya token
+                refresh token expired / tidak punya token karena saya memasang
+                middleware halaman menggunakan HOC
               </li>
               <li>
                 Table ini menerapkan konsep server-side, sehingga hanya
