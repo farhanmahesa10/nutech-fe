@@ -64,6 +64,12 @@ const Home = () => {
         colWidth: "25%",
       },
       {
+        Header: "Stok",
+        accessor: "stok",
+        sortable: true,
+        colWidth: "25%",
+      },
+      {
         Header: "Foto",
         accessor: "foto",
         sortable: true,
@@ -168,11 +174,16 @@ const Home = () => {
         setOpen={setModalAddProductOpen}
         onSubmit={async (values) => {
           if (crudType === "Tambah") {
-            await addProduct(values);
+            try {
+              await addProduct(values);
+              setModalAddProductOpen(false);
+            } catch (error) {}
           } else if (crudType === "Ubah") {
-            await updateProduct(values);
+            try {
+              await updateProduct(values);
+              setModalAddProductOpen(false);
+            } catch (error) {}
           }
-          setModalAddProductOpen(false);
         }}
         defaultValue={productShow}
       />
@@ -199,6 +210,52 @@ const Home = () => {
       />
       <div className="wrapper">
         <div className="container my-[40px]">
+          <div>
+            <h5>BATASAN MASALAH :</h5>
+            <ol style={{ listStyle: "revert" }}>
+              <li>Dibangun menggunakan React Js + Express Js</li>
+              <li>
+                Dibangun menggunakan JSON DB mengingat ini adalah test frontend
+                saja
+              </li>
+              <li>akses token akan expired dalam 15 detik</li>
+              <li>
+                setelah akses token expired maka sistem akan dengan otomatis
+                melakukan refres token
+              </li>
+              <li>
+                refresh token hanya bisa dilakukan setelah 10 menit login, dan
+                akan diminta login kembali setelah 10 menit. waktu expired di
+                set cepat karna ini hanya untuk test fungsi saja
+              </li>
+              <li>Waktu expired token dapat disesuaikan dengan kebutuhan</li>
+              <li>
+                Anda tidak dapat mengakses halaman ini jika tidak login /
+                refresh token expired / tidak punya token
+              </li>
+              <li>
+                Table ini menerapkan konsep server-side, sehingga hanya
+                melakukan load pada data yang ditampilkan saja agar performa
+                lebih stabil
+              </li>
+              <li>
+                validasi form dilakukan di dulu di fronend sebelum dikirim ke
+                backend
+              </li>
+              <li>
+                validasi pada backend hanya dilakukan untuk nama unique karena
+                ini test fronend react saja. validasi nya dilakukan di BE karena
+                ini menggunakan konsep server-side. tentu saya dapat melakukan
+                validasi uniqu di front-end jika data berbasis client-side
+              </li>
+              <li>
+                image dirubah ke base64 karena ini merupakan test frontend dan
+                tidak menggunakan databse asli. saya faham jika realnya tidak
+                baik jika dirubah ke base64, melainkan harus di move file dari
+                BE.
+              </li>
+            </ol>
+          </div>
           <h5 className="font-h5 my-4">Kelola Data Produk</h5>
           <div className="flex flex-col sm:flex-row gap-4 justify-between">
             <form onSubmit={formik.handleSubmit} className="order-2 sm:order-1">

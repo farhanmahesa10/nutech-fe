@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { DESTROY, GET, POST, PUT } from "../configs/api/api";
-
+import toast from "react-hot-toast";
 const useProducts = () => {
   const [products, setProducts] = useState([]);
   const [productShow, setProductShow] = useState(null);
@@ -38,7 +38,13 @@ const useProducts = () => {
     try {
       const result = await POST("/products", values);
       initProducts();
-    } catch (error) {}
+    } catch (error) {
+      if (error?.response?.status === 422) {
+        toast.error(error.response.data.message);
+      }
+      setReqLoading(false);
+      throw error;
+    }
   }, []);
 
   const updateProduct = useCallback(async (values) => {
@@ -46,7 +52,14 @@ const useProducts = () => {
     try {
       const result = await PUT(`/products/${values.id}`, values);
       initProducts();
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+      if (error?.response?.status === 422) {
+        toast.error(error.response.data.message);
+      }
+      setReqLoading(false);
+      throw error;
+    }
   }, []);
 
   const deleteProduct = useCallback(async (id) => {

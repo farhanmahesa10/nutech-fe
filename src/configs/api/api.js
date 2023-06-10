@@ -68,8 +68,6 @@ API.interceptors.response.use(
         } catch (_error) {
           window.location.href = "/login";
         }
-      } else {
-        window.location.href = "/login";
       }
     }
     return Promise.reject(err);

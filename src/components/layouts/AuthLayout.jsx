@@ -4,7 +4,7 @@ const AuthLayouts = (props) => {
   const { children, navBg, title, bg, breadCrumbs, childrenPosition } = props;
   return (
     <main
-      className={`min-h-screen  wrapper lg:bg-[url('./assets/images/bg-login.jpg')] bg-no-repeat ${
+      className={`min-h-screen bg-slate-200 wrapper lg:bg-[url('./assets/images/bg-login.jpg')] bg-no-repeat ${
         childrenPosition === "left" && "bg-right"
       }  lg:bg-[size:100%_100%] `}
     >
@@ -21,13 +21,6 @@ const AuthLayouts = (props) => {
               <div className="mt-[32px]  bg-slate-500/80 p-5">
                 <h1 className="font-h1 ">Nutech Test</h1>
                 <h1 className="font-h1 ">By, M. Farhan</h1>
-                <div className=" px-2 rounded-[8px]">
-                  <p className="mt-[24px] e font-lg font-semibold">
-                    To login please use this account
-                  </p>
-                  <p>Username : admin</p>
-                  <p>Password : 1234</p>
-                </div>
               </div>
             </div>
           </div>

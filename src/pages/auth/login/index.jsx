@@ -7,6 +7,7 @@ import { POST } from "../../../configs/api/api";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { withCheckAuth } from "../../../components/hocs";
+import { ServerSideLoading } from "../../../components/atoms";
 const Login = () => {
   const navigate = useNavigate();
   const [reqLoading, setReqLoading] = useState(false);
@@ -19,7 +20,7 @@ const Login = () => {
     initialValues: { username: "", password: "" },
     validationSchema,
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
       handleLogin(values);
     },
   });
@@ -49,11 +50,21 @@ const Login = () => {
 
   return (
     <AuthLayout childrenPosition="right">
+      <div className="relative">
+        {reqLoading && <ServerSideLoading fixCenter />}
+      </div>
       <Toaster />
       <div className="h-screen flex gap-4 flex-col justify-center">
         <form onSubmit={formik.handleSubmit}>
           <h1 className="font-h1 text-center">LOGIN!</h1>
           <p className="my-2 text-center">Welcome,back</p>
+          <div className=" px-2 rounded-[8px] bg-yellow-400/30 my-4">
+            <p className="mt-[24px] e font-lg font-semibold">
+              Silahkan masukan akun berikut :
+            </p>
+            <p>Username : admin</p>
+            <p>Password : 1234</p>
+          </div>
           <div>
             <FormControl
               label="Username"

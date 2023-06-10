@@ -13,6 +13,9 @@ const ModalAddProduct = (props) => {
     harga_jual: Yup.number()
       .required("Kolom ini tidak boleh kosong")
       .typeError("Kolom ini harus berisi muber"),
+    stok: Yup.number()
+      .required("Kolom ini tidak boleh kosong")
+      .typeError("Kolom ini harus berisi muber"),
     foto: Yup.string().required("Kolom ini tidak boleh kosong"),
   });
   const [initialValues, setInitialValues] = useState({
@@ -43,6 +46,7 @@ const ModalAddProduct = (props) => {
       setInitialValues({
         nama: "",
         foto: "",
+        stok: "",
         harga_beli: "",
         harga_jual: "",
       });
@@ -68,7 +72,7 @@ const ModalAddProduct = (props) => {
         <hr className="text-slate-500" />
         <form onSubmit={formik.handleSubmit} className=" mt-4">
           <div className="grid grid-cols-2 gap-4">
-            <div className="w-full col-span-2">
+            <div className="w-full col-span-2 sm:col-span-1">
               <FormControl
                 label="Nama Produk"
                 onChange={formik.handleChange}
@@ -78,6 +82,19 @@ const ModalAddProduct = (props) => {
                 max={150}
                 placeholder="Masukan nama barang"
                 value={formik.values.nama || ""}
+              />
+            </div>
+            <div className="w-full col-span-2 sm:col-span-1">
+              <FormControl
+                label="Stok Produk"
+                onChange={formik.handleChange}
+                meta={formik.getFieldMeta("stok")}
+                name="stok"
+                control="input"
+                type="number"
+                max={150}
+                placeholder="Masukan stok barang"
+                value={formik.values.stok || ""}
               />
             </div>
             <div className="w-full col-span-2 sm:col-span-1">
@@ -99,7 +116,7 @@ const ModalAddProduct = (props) => {
                 meta={formik.getFieldMeta("harga_jual")}
                 name="harga_jual"
                 control="input"
-                type="text"
+                type="number"
                 placeholder="Masukan harga jual"
                 value={formik.values.harga_jual || ""}
               />
