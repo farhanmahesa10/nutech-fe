@@ -232,7 +232,9 @@ const Home = () => {
               <li>
                 Anda tidak dapat mengakses halaman ini jika tidak login /
                 refresh token expired / tidak punya token karena saya memasang
-                middleware halaman menggunakan HOC
+                middleware halaman menggunakan HOC, begitupun jika anda sedang
+                aktif login maka anda tidak dapat mengakses halaman login jika
+                blm logout.
               </li>
               <li>
                 Table ini menerapkan konsep server-side, sehingga hanya
