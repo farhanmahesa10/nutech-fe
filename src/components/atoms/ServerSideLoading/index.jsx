@@ -4,7 +4,7 @@ const ServerSideLoading = (props) => {
   const { fixCenter } = props;
   return (
     <div
-      className={`z-[9999] fixed h-screen top-0 w-screen  backdrop-blur-[2px]  flex justify-center items-center rounded-[8px]`}
+      className={`z-[9999] fixed h-screen left-0 top-0 w-screen  backdrop-blur-[2px]  flex justify-center items-center rounded-[8px]`}
     >
       <div className="rounded-[8px] flex-col bg-slate-500/70 w-[120px] h-[120px] flex items-center justify-center">
         <div role="status">
