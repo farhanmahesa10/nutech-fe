@@ -1,12 +1,13 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { Home, Login } from "../../pages";
+import { Home, Login, Tester } from "../../pages";
 
 const Routing = () => {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/home" element={<Home />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Tester />} />
     </Routes>
   );
 };
