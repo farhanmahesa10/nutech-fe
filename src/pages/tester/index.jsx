@@ -12,7 +12,15 @@ import { IDR } from "../../helpers/globalHelpers";
 
 const Tester = () => {
   const [apiData, setApiData] = useState([]);
+
   const [totalPrice, setTotalPrice] = useState(0);
+  useEffect(() => {
+    const totalPrice = apiData.reduce(
+      (accumulator, item) => accumulator + item.quantity * item.product.price,
+      0
+    );
+    setTotalPrice(totalPrice);
+  }, [apiData]);
   useEffect(() => {
     const url = "https://spe-academy.spesolution.net/api/recruitment";
     const headers = {
@@ -25,7 +33,8 @@ const Tester = () => {
       .then((response) => {
         // Tangani respons yang diterima
         const totalPrice = response.data.reduce(
-          (accumulator, item) => accumulator + item.product.price,
+          (accumulator, item) =>
+            accumulator + item.quantity * item.product.price,
           0
         );
         setTotalPrice(totalPrice);
@@ -44,6 +53,7 @@ const Tester = () => {
       setTime(moment().format("HH:mm:ss"));
     }, 1000);
   }, []);
+
   return (
     <div className="wrapper">
       <div className="container">
@@ -65,7 +75,26 @@ const Tester = () => {
           </thead>
           <tbody>
             {apiData?.map((r, i) => {
-              return <ProductListTable data={r} key={"data-" + i} />;
+              return (
+                <ProductListTable
+                  data={r}
+                  key={"data-" + i}
+                  setTotalPrice={setTotalPrice}
+                  totalPrice={totalPrice}
+                  onChange={(val) => {
+                    const changed = { ...apiData[i], quantity: parseInt(val) };
+                    const newApiData = apiData.map((r) => {
+                      if (r.product.code === changed.product.code) {
+                        return changed;
+                      } else {
+                        return r;
+                      }
+                    });
+
+                    setApiData(newApiData);
+                  }}
+                />
+              );
             })}
           </tbody>
           <tfoot className="bg-[#111111] text-white">
@@ -109,8 +138,13 @@ const Tester = () => {
   );
 };
 
-const ProductListTable = ({ data }) => {
+const ProductListTable = ({ data, setTotalPrice, totalPrice, onChange }) => {
   const [quantity, setQuantity] = useState(data.quantity || 0);
+
+  useEffect(() => {
+    onChange(quantity);
+  }, [quantity]);
+
   return (
     <tr className="text-center">
       <td>
@@ -143,6 +177,7 @@ const ProductListTable = ({ data }) => {
                     setQuantity(data.product.stock);
                   }
                 } else {
+                  setQuantity(0);
                   e.target.value = 0;
                 }
               }}
