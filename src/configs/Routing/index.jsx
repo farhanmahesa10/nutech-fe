@@ -5,9 +5,9 @@ import { Home, Login, Tester } from "../../pages";
 const Routing = () => {
   return (
     <Routes>
-      <Route path="/home" element={<Home />} />
+      <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/" element={<Tester />} />
+      <Route path="/tester" element={<Tester />} />
     </Routes>
   );
 };
