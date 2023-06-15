@@ -11,7 +11,7 @@ import { IDR } from "../../helpers/globalHelpers";
 
 const Tester = () => {
   const [apiData, setApiData] = useState([]);
-
+  const [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {
     const url = "https://spe-academy.spesolution.net/api/recruitment";
     const headers = {
@@ -23,7 +23,11 @@ const Tester = () => {
       .get(url, { headers })
       .then((response) => {
         // Tangani respons yang diterima
-        console.log(response);
+        const totalPrice = response.data.reduce(
+          (accumulator, item) => accumulator + item.product.price,
+          0
+        );
+        setTotalPrice(totalPrice);
         setApiData(response.data);
       })
       .catch((error) => {
@@ -92,7 +96,7 @@ const Tester = () => {
           <tfoot className="bg-[#111111] text-white">
             <tr>
               <th colSpan={3} className="text-end">
-                Total : 800.000.000
+                Total : {totalPrice}
               </th>
             </tr>
           </tfoot>
