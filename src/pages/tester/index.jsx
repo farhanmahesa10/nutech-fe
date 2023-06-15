@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useFormik } from "formik";
 import moment from "moment";
 import React, { useState } from "react";
 import { useRef } from "react";
@@ -36,32 +37,6 @@ const Tester = () => {
       });
   }, []);
 
-  const data = [
-    {
-      type: "type 1",
-      model: "lamborgini",
-      price: 200000000,
-      image: "https://placehold.co/200x150",
-      quantity: 9,
-      stok: 8,
-    },
-    {
-      type: "type 1",
-      model: "lamborgini",
-      price: 200000000,
-      image: "https://placehold.co/200x150",
-      quantity: 9,
-      stok: 6,
-    },
-    {
-      type: "type 1",
-      model: "lamborgini",
-      price: 200000000,
-      image: "https://placehold.co/200x150",
-      quantity: 9,
-      stok: 6,
-    },
-  ];
   const [time, setTime] = useState("");
   // console.log(time.current);
   useEffect(() => {
@@ -96,7 +71,7 @@ const Tester = () => {
           <tfoot className="bg-[#111111] text-white">
             <tr>
               <th colSpan={3} className="text-end">
-                Total : {totalPrice}
+                Total : {IDR.format(totalPrice)}
               </th>
             </tr>
           </tfoot>
@@ -135,6 +110,7 @@ const Tester = () => {
 };
 
 const ProductListTable = ({ data }) => {
+  const [quantity, setQuantity] = useState(data.quantity || 0);
   return (
     <tr className="text-center">
       <td>
@@ -146,6 +122,7 @@ const ProductListTable = ({ data }) => {
             <p className="font-sm text-gray-500">
               {IDR.format(data.product.price)}
             </p>
+            <p className="text-red-500">{data.product.stock} In Stock</p>
           </div>
         </div>
       </td>
@@ -155,12 +132,25 @@ const ProductListTable = ({ data }) => {
             <FormControl
               control="input"
               type="number"
+              maxLength={data.product.stock}
               defaultValue={data.quantity}
+              onChange={(e) => {
+                if (e.target.value > 0) {
+                  if (e.target.value <= data.product.stock) {
+                    setQuantity(e.target.value);
+                  } else {
+                    e.target.value = data.product.stock;
+                    setQuantity(data.product.stock);
+                  }
+                } else {
+                  e.target.value = 0;
+                }
+              }}
             />
           </div>
         </div>
       </td>
-      <td>{IDR.format(data.quantity * data.product.price)}</td>
+      <td>{IDR.format(quantity * data.product.price)}</td>
     </tr>
   );
 };
