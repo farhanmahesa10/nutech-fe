@@ -140,7 +140,7 @@ const ProductListTable = ({ data }) => {
             <p className="text-blue-500">{data.product.code}</p>
             <p className=" font-lg">{data.product.name}</p>
             <p className="font-sm text-gray-500">
-              IDR {IDR.format(data.product.price)}
+              {IDR.format(data.product.price)}
             </p>
           </div>
         </div>
